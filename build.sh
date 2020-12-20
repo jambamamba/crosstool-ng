@@ -7,6 +7,7 @@ function main()
 		git clone https://github.com/jambamamba/crosstool-ng.git
 	fi
 	pushd crosstool-ng
+	git checkout raspi0
 
 	#sudo apt-get install -y bison cvs flex gperf texinfo automake libtool unzip help2man gawk libtool-bin libtool-doc libncurses5-dev libncursesw5-dev protobuf-compiler kpartx
 
