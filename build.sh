@@ -1,9 +1,24 @@
 #!/bin/bash -ex
 set -ex
 
-function main()
+TOOLCHAIN_DIR_RPI=${HOME}/${DOCKERUSER}/.leila/toolchains/rpi
+
+function parseArgs()
+{
+  for change in $@; do
+      set -- `echo $change | tr '=' ' '`
+      echo "variable name == $1  and variable value == $2"
+      #can assign value to a variable like below
+      eval $1=$2;
+  done
+}
+
+
+function build()
 {
 	#sudo apt-get install -y bison cvs flex gperf texinfo automake libtool unzip help2man gawk libtool-bin libtool-doc libncurses5-dev libncursesw5-dev protobuf-compiler kpartx
+	
+	parseArgs "$@"
 
 	if [ ! -f config.h ]; then
 		./bootstrap
@@ -12,7 +27,6 @@ function main()
 	make -j$(getconf _NPROCESSORS_ONLN)
 	make install
 
-	local TOOLCHAIN_DIR_RPI=${HOME}/${DOCKERUSER}/.leila/toolchains/rpi
 	export TOOLCHAIN_DIR_RPI=${TOOLCHAIN_DIR_RPI}
 	mkdir -p ${TOOLCHAIN_DIR_RPI}
 
@@ -22,7 +36,7 @@ function main()
 	unset CC
 	unset CXX
 	unset LD_LIBRARY_PATH
-	ln -s ../raspi0.config .config
+	ln -fs ../raspi0.config .config
 
 	#We already have a .config file, so we do not need to go through the menuconfig steps
 	#../build/bin/ct-ng menuconfig  
@@ -49,10 +63,22 @@ function main()
 	#Save
 			
 	../build/bin/ct-ng build
+	sudo chown -R dev:dev ${TOOLCHAIN_DIR_RPI}
 	popd
 	cp -f Toolchain-RaspberryPi.cmake ${TOOLCHAIN_DIR_RPI}/Toolchain-RaspberryPi.cmake
 }
 
-main
+function clean()
+{
+	sudo rm -fr ${TOOLCHAIN_DIR_RPI}
+	rm config.h
+}
+
+if [ "$1" == "clean" ]; then
+	clean
+else
+	build TOOLCHAIN_DIR_RPI=${TOOLCHAIN_DIR_RPI}
+fi
+
 
 
