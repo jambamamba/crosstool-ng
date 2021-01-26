@@ -4,7 +4,7 @@ SET(CMAKE_SYSTEM_NAME Linux)
 SET(CMAKE_SYSTEM_VERSION 1)
 SET(HOMEDIR "$ENV{HOME}/$ENV{DOCKERUSER}")
 
-SET(TARGET_DIR ${HOMEDIR}/.leila/toolchains/rpi)
+SET(TARGET_DIR ${HOMEDIR}/.leila/toolchains/raspberrypi0)
 SET(TOOLCHAIN_DIR ${TARGET_DIR}/x-tools/arm-rpi-linux-gnueabihf)
 
 # specify the cross compiler

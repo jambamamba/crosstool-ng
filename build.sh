@@ -1,7 +1,7 @@
 #!/bin/bash -ex
 set -ex
 
-TOOLCHAIN_DIR_RPI=${HOME}/${DOCKERUSER}/.leila/toolchains/rpi
+TOOLCHAIN_DIR=${HOME}/${DOCKERUSER}/.leila/toolchains/raspberrypi0
 
 function parseArgs()
 {
@@ -27,8 +27,8 @@ function build()
     make -j$(getconf _NPROCESSORS_ONLN)
     make install
 
-    export TOOLCHAIN_DIR_RPI=${TOOLCHAIN_DIR_RPI}
-    mkdir -p ${TOOLCHAIN_DIR_RPI}
+    export TOOLCHAIN_DIR=${TOOLCHAIN_DIR}
+    mkdir -p ${TOOLCHAIN_DIR}
 
     mkdir -p staging
     pushd staging
@@ -63,21 +63,21 @@ function build()
     #Save
 
     ../build/bin/ct-ng build
-    sudo chown -R dev:dev ${TOOLCHAIN_DIR_RPI}
+    sudo chown -R dev:dev ${TOOLCHAIN_DIR}
     popd
-    cp -f Toolchain.cmake ${TOOLCHAIN_DIR_RPI}/Toolchain.cmake
+    cp -f Toolchain.cmake ${TOOLCHAIN_DIR}/Toolchain.cmake
 }
 
 function clean()
 {
-    sudo rm -fr ${TOOLCHAIN_DIR_RPI}
+    sudo rm -fr ${TOOLCHAIN_DIR}
     rm config.h
 }
 
 if [ "$1" == "clean" ]; then
     clean
 else
-    build TOOLCHAIN_DIR_RPI=${TOOLCHAIN_DIR_RPI}
+    build TOOLCHAIN_DIR=${TOOLCHAIN_DIR}
 fi
 
 
