@@ -16,68 +16,68 @@ function parseArgs()
 
 function build()
 {
-	#sudo apt-get install -y bison cvs flex gperf texinfo automake libtool unzip help2man gawk libtool-bin libtool-doc libncurses5-dev libncursesw5-dev protobuf-compiler kpartx
-	
-	parseArgs "$@"
+    #sudo apt-get install -y bison cvs flex gperf texinfo automake libtool unzip help2man gawk libtool-bin libtool-doc libncurses5-dev libncursesw5-dev protobuf-compiler kpartx
 
-	if [ ! -f config.h ]; then
-		./bootstrap
-		./configure --prefix=${PWD}/build
-	fi
-	make -j$(getconf _NPROCESSORS_ONLN)
-	make install
+    parseArgs "$@"
 
-	export TOOLCHAIN_DIR_RPI=${TOOLCHAIN_DIR_RPI}
-	mkdir -p ${TOOLCHAIN_DIR_RPI}
+    if [ ! -f config.h ]; then
+        ./bootstrap
+        ./configure --prefix=${PWD}/build
+    fi
+    make -j$(getconf _NPROCESSORS_ONLN)
+    make install
 
-	mkdir -p staging
-	pushd staging
-	mkdir -p downloads
-	unset CC
-	unset CXX
-	unset LD_LIBRARY_PATH
-	ln -fs ../raspi0.config .config
+    export TOOLCHAIN_DIR_RPI=${TOOLCHAIN_DIR_RPI}
+    mkdir -p ${TOOLCHAIN_DIR_RPI}
 
-	#We already have a .config file, so we do not need to go through the menuconfig steps
-	#../build/bin/ct-ng menuconfig  
-	#The menuconfig presents a UI that lets you create the .config file.
-	#In the UI, follow these steps:
-	#Paths and misc options > Prefix directory >  /home/oosman/pi2/x-tools/${CT_TARGET}  
-	#			> Number of parallel jobs 8 
-	#Target options > Target Architecture 	> arm
-	#					> Suffix to the arch-part > rpi
-	#					> Floating point : hardward FPU
-	#					> Emit assembly for CPU (none)
-	#					> tune for cpu (nothing, no ev4)
-	#Operating System > Target OS > linux
-	#Binary utilities > Linkers to enable > ld,gold
-	#					> Enable threaded gold
-	#C-library > Version of glibc (2.29)
-	#	  > Create /etc/ld.so.conf file
-	#C compiler > C++
-	#Companion tools > autoconf
-	#			> automake
-	#			> libtool
-	#			> make
-	#Exit
-	#Save
-			
-	../build/bin/ct-ng build
-	sudo chown -R dev:dev ${TOOLCHAIN_DIR_RPI}
-	popd
-	cp -f Toolchain-RaspberryPi.cmake ${TOOLCHAIN_DIR_RPI}/Toolchain-RaspberryPi.cmake
+    mkdir -p staging
+    pushd staging
+    mkdir -p downloads
+    unset CC
+    unset CXX
+    unset LD_LIBRARY_PATH
+    ln -fs ../raspi0.config .config
+
+    #We already have a .config file, so we do not need to go through the menuconfig steps
+    #../build/bin/ct-ng menuconfig
+    #The menuconfig presents a UI that lets you create the .config file.
+    #In the UI, follow these steps:
+    #Paths and misc options > Prefix directory >  /home/oosman/pi2/x-tools/${CT_TARGET}
+    #			> Number of parallel jobs 8
+    #Target options > Target Architecture 	> arm
+    #					> Suffix to the arch-part > rpi
+    #					> Floating point : hardward FPU
+    #					> Emit assembly for CPU (none)
+    #					> tune for cpu (nothing, no ev4)
+    #Operating System > Target OS > linux
+    #Binary utilities > Linkers to enable > ld,gold
+    #					> Enable threaded gold
+    #C-library > Version of glibc (2.29)
+    #	  > Create /etc/ld.so.conf file
+    #C compiler > C++
+    #Companion tools > autoconf
+    #			> automake
+    #			> libtool
+    #			> make
+    #Exit
+    #Save
+
+    ../build/bin/ct-ng build
+    sudo chown -R dev:dev ${TOOLCHAIN_DIR_RPI}
+    popd
+    cp -f Toolchain.cmake ${TOOLCHAIN_DIR_RPI}/Toolchain.cmake
 }
 
 function clean()
 {
-	sudo rm -fr ${TOOLCHAIN_DIR_RPI}
-	rm config.h
+    sudo rm -fr ${TOOLCHAIN_DIR_RPI}
+    rm config.h
 }
 
 if [ "$1" == "clean" ]; then
-	clean
+    clean
 else
-	build TOOLCHAIN_DIR_RPI=${TOOLCHAIN_DIR_RPI}
+    build TOOLCHAIN_DIR_RPI=${TOOLCHAIN_DIR_RPI}
 fi
 
 

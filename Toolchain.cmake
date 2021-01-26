@@ -9,20 +9,20 @@ SET(TOOLCHAIN_DIR ${TARGET_DIR}/x-tools/arm-rpi-linux-gnueabihf)
 
 # specify the cross compiler
 SET(CMAKE_C_COMPILER
-	${TOOLCHAIN_DIR}/bin/arm-rpi-linux-gnueabihf-gcc)
+    ${TOOLCHAIN_DIR}/bin/arm-rpi-linux-gnueabihf-gcc)
 
 SET(CMAKE_CXX_COMPILER
-	${TOOLCHAIN_DIR}/bin/arm-rpi-linux-gnueabihf-g++)
+    ${TOOLCHAIN_DIR}/bin/arm-rpi-linux-gnueabihf-g++)
 
 SET(CMAKE_LINKER
-        ${TOOLCHAIN_DIR}/bin/arm-rpi-linux-gnueabihf-ld)
+    ${TOOLCHAIN_DIR}/bin/arm-rpi-linux-gnueabihf-ld)
 
 SET(CMAKE_STRIP
-	${TOOLCHAIN_DIR}/bin/arm-rpi-linux-gnueabihf-strip)
+    ${TOOLCHAIN_DIR}/bin/arm-rpi-linux-gnueabihf-strip)
 
 # where is the target environment
 SET(CMAKE_FIND_ROOT_PATH
-	${TOOLCHAIN_DIR})
+    ${TOOLCHAIN_DIR})
 
 # search for programs in the build host directories
 SET(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
