@@ -1,7 +1,7 @@
 #!/bin/bash -ex
 set -ex
 
-TOOLCHAIN_DIR=${HOME}/${DOCKERUSER}/.leila/toolchains/raspberrypi0
+TOOLCHAIN_DIR=${HOME}/${DOCKERUSER}/.leila/toolchains/raspberrypi4
 
 function parseArgs()
 {
@@ -36,10 +36,11 @@ function build()
     unset CC
     unset CXX
     unset LD_LIBRARY_PATH
-    ln -fs ../raspi0.config .config
+    #ln -fs ../raspi0.config .config
+    ln -fs ../raspi4.config .config
 
     #We already have a .config file, so we do not need to go through the menuconfig steps
-    #../build/bin/ct-ng menuconfig
+    # ../build/bin/ct-ng menuconfig
     #The menuconfig presents a UI that lets you create the .config file.
     #In the UI, follow these steps:
     #Paths and misc options > Prefix directory >  /home/oosman/pi2/x-tools/${CT_TARGET}
@@ -61,6 +62,13 @@ function build()
     #			> make
     #Exit
     #Save
+    #
+    #For a different target, lets grap the raspberrypi3 for example:
+    # ./build/bin/ct-ng list-samples | grep rpi
+    # ./build/bin/ct-ng aarch64-rpi3-linux-gnu
+    # ../build/bin/ct-ng menuconfig
+    # save exit
+    # https://ilyas-hamadouche.medium.com/creating-a-cross-platform-toolchain-for-raspberry-pi-4-5c626d908b9d
 
     ../build/bin/ct-ng build
     sudo chown -R dev:dev ${TOOLCHAIN_DIR}
