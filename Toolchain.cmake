@@ -4,21 +4,21 @@ SET(CMAKE_SYSTEM_NAME Linux)
 SET(CMAKE_SYSTEM_VERSION 1)
 SET(HOMEDIR "$ENV{HOME}/$ENV{DOCKERUSER}")
 
-SET(TARGET_DIR ${HOMEDIR}/.leila/toolchains/raspberrypi0)
-SET(TOOLCHAIN_DIR ${TARGET_DIR}/x-tools/arm-rpi-linux-gnueabihf)
+SET(TARGET_DIR ${HOMEDIR}/.leila/toolchains/raspberrypi4)
+SET(TOOLCHAIN_DIR ${TARGET_DIR}/x-tools/aarch64-rpi4-linux-gnu)
 
 # specify the cross compiler
 SET(CMAKE_C_COMPILER
-    ${TOOLCHAIN_DIR}/bin/arm-rpi-linux-gnueabihf-gcc)
+    ${TOOLCHAIN_DIR}/bin/aarch64-rpi4-linux-gnu-gcc)
 
 SET(CMAKE_CXX_COMPILER
-    ${TOOLCHAIN_DIR}/bin/arm-rpi-linux-gnueabihf-g++)
+    ${TOOLCHAIN_DIR}/bin/aarch64-rpi4-linux-gnu-g++)
 
 SET(CMAKE_LINKER
-    ${TOOLCHAIN_DIR}/bin/arm-rpi-linux-gnueabihf-ld)
+    ${TOOLCHAIN_DIR}/bin/aarch64-rpi4-linux-gnu-ld)
 
 SET(CMAKE_STRIP
-    ${TOOLCHAIN_DIR}/bin/arm-rpi-linux-gnueabihf-strip)
+    ${TOOLCHAIN_DIR}/bin/aarch64-rpi4-linux-gnu-strip)
 
 # where is the target environment
 SET(CMAKE_FIND_ROOT_PATH
@@ -30,7 +30,7 @@ SET(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
 SET(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
 SET(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 
-SET(CMAKE_SYSROOT ${TOOLCHAIN_DIR}/arm-rpi-linux-gnueabihf/sysroot)
+SET(CMAKE_SYSROOT ${TOOLCHAIN_DIR}/aarch64-rpi4-linux-gnu/sysroot)
 SET(SYSROOT_ARM ${CMAKE_SYSROOT})
 
 SET(OpenCV_DIR "${HOMEDIR}/opencv/buildPi/install/lib/cmake/opencv4")
