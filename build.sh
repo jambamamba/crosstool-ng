@@ -36,7 +36,7 @@ function build()
     unset CC
     unset CXX
     unset LD_LIBRARY_PATH
-    ln -fs ../raspi0.config .config
+    ln -fs ../armv7l.config .config
 
     #We already have a .config file, so we do not need to go through the menuconfig steps
     #../build/bin/ct-ng menuconfig
